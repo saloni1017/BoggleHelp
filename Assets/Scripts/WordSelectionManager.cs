@@ -41,11 +41,8 @@ public class WordSelectionManager : MonoBehaviour
     // Start a new word selection (clears previous selection)
     public void StartSelection()
     {
-        if (!isSelecting)
-        {
-            isSelecting = true;
-            selectedTiles.Clear(); // Clear the previous selection
-        }
+        isSelecting = true;
+        selectedTiles.Clear(); // Clear the previous selection
     }
 
     // Add a tile to the selected word
@@ -69,6 +66,7 @@ public class WordSelectionManager : MonoBehaviour
             {
                 finalWordsList.Add(finalWord); // Store valid words permanently
                 Debug.Log("Valid Word Stored: " + finalWord);
+                DisableValidTiles(); // Prevent re-selection of these tiles
             }
             else // Word is invalid → Reset tiles so they can be used again
             {
@@ -94,6 +92,15 @@ public class WordSelectionManager : MonoBehaviour
         foreach (TileData tile in selectedTiles)
         {
             tile.ResetTile(); // Unlock tile for future use
+        }
+    }
+
+    // Disable tiles from a valid word so they can't be selected again
+    private void DisableValidTiles()
+    {
+        foreach (TileData tile in selectedTiles)
+        {
+            tile.DisableTile(); // Prevents re-selection of these tiles
         }
     }
 

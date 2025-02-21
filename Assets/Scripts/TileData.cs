@@ -4,18 +4,20 @@ using UnityEngine.EventSystems;
 public class TileData : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     public bool IsSelected; // Track if tile is selected
+    public bool IsDisabled; // Prevents selection of tiles used in valid words
     public string Letter;   // Letter assigned to this tile
     public int TileType;    // Tile type (not used here but can be for different types of tiles)
 
     private void Awake()
     {
-        IsSelected = false; // Ensure tile is selectable at the start
+        IsSelected = false;
+        IsDisabled = false; // Initially, all tiles are selectable
     }
 
     // Called when the player touches a tile
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (!IsSelected) // Prevent selecting already selected tiles
+        if (!IsSelected && !IsDisabled) // Prevent selecting already selected or disabled tiles
         {
             WordSelectionManager.Instance.StartSelection(); // Start a new word selection
             SelectTile();
@@ -29,7 +31,7 @@ public class TileData : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         if (hit.collider != null)
         {
             TileData tile = hit.collider.GetComponent<TileData>();
-            if (tile != null && !tile.IsSelected) // Select the tile if it's not selected already
+            if (tile != null && !tile.IsSelected && !tile.IsDisabled) // Select only if not selected or disabled
             {
                 tile.SelectTile();
             }
@@ -45,7 +47,7 @@ public class TileData : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     // Mark tile as selected
     public void SelectTile()
     {
-        if (!IsSelected)
+        if (!IsSelected && !IsDisabled)
         {
             IsSelected = true; // Prevents re-selection in the same swipe
             WordSelectionManager.Instance.AddTile(this);
@@ -56,5 +58,11 @@ public class TileData : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     public void ResetTile()
     {
         IsSelected = false; // Allows the tile to be used again
+    }
+
+    // Disable tile (used for valid words so they can't be selected again)
+    public void DisableTile()
+    {
+        IsDisabled = true;
     }
 }
