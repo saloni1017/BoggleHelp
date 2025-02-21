@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 
 public class WordSelectionManager : MonoBehaviour
@@ -14,10 +15,18 @@ public class WordSelectionManager : MonoBehaviour
 
     private string wordListPath = @"C:\New folder\BoggleWord-main\Assets\wordlist.txt"; // Path to the word list file
 
+    [SerializeField]
+    private TextMeshProUGUI ScoreCountText;
+    [SerializeField]
+    private TextMeshProUGUI FoundCount;
+    [SerializeField]
+    private GameObject GameOverScreen;
+
     void Awake()
     {
         Instance = this;
         LoadValidWords(); // Load valid words at the start
+        GameOverScreen.SetActive(false);
     }
 
     // Load words from wordlist.txt into a HashSet for quick validation
@@ -112,5 +121,17 @@ public class WordSelectionManager : MonoBehaviour
     private void PrintFinalWordsList()
     {
         Debug.Log("Final List of Valid Words: " + string.Join(", ", finalWordsList));
+        int letterCount = 0;
+
+        // Count total letters in all valid words
+        foreach (string word in finalWordsList)
+        {
+            letterCount += word.Length;
+        }
+
+        FoundCount.text = finalWordsList.Count.ToString();
+        ScoreCountText.text = (letterCount * 3).ToString();
+        if (finalWordsList.Count == GridCreator.GCInstance.WordToWin)
+            GameOverScreen.SetActive(true);
     }
 }

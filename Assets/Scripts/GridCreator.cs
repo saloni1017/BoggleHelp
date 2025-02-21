@@ -7,6 +7,11 @@ using Unity.VisualScripting;
 
 public class GridCreator : MonoBehaviour
 {
+    public static GridCreator GCInstance;
+
+    public TextMeshProUGUI CountText;
+    public int WordToWin;
+
     [System.Serializable]
     public class GridSize
     {
@@ -45,6 +50,12 @@ public class GridCreator : MonoBehaviour
     RootObject root;
     private bool IsInitialised = false;
     // Start is called before the first frame update
+
+    void Awake()
+    {
+        GCInstance = this;
+    }
+
     void Start()
     {
         string filePath = "C:\\New folder\\BoggleWord-main\\Assets\\LevelData.json";
@@ -82,6 +93,8 @@ public class GridCreator : MonoBehaviour
             if (row == rows && col == cols && !IsInitialised)
             {
                 int BugCount = grid.bugCount;
+                CountText.text = grid.wordCount.ToString();
+                WordToWin = grid.wordCount;
                 IsInitialised = true;
                 for (int i = 0; i < row; i++)
                 {
