@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Diagnostics;
 
 public class TileData : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
@@ -11,10 +12,12 @@ public class TileData : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     public int TileType;    // Tile type (not used here but can be for different types of tiles)
     public List<Image> dots; // List of dot images to indicate score
     public GameObject Bug;
+    public bool IsBug;
     public GameObject Block;
 
     private void Awake()
     {
+        IsBug = false;
         IsSelected = false;
         IsDisabled = false; // Ensure tiles are selectable at start
     }

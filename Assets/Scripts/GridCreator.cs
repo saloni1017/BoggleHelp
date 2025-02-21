@@ -109,6 +109,7 @@ public class GridCreator : MonoBehaviour
                         if(BugCount > 0)
                         {
                             tileObj.GetComponent<TileData>().Bug.SetActive(true);
+                            tileObj.GetComponent<TileData>().IsBug = true;
                             BugCount--;
                         }
                         /// assign tile type here in tile data class
