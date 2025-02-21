@@ -1,27 +1,25 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TileData : MonoBehaviour, IPointerDownHandler, IDragHandler
+public class TileData : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     public bool IsSelected;
     public string Letter;
     public int TileType;
 
-    private RectTransform rectTransform;
-
     private void Awake()
     {
-        rectTransform = GetComponent<RectTransform>();
+        IsSelected = false;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        WordSelectionManager.Instance.StartSelection();
         SelectTile();
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        // Check if dragging over another tile
         RaycastHit2D hit = Physics2D.Raycast(eventData.position, Vector2.zero);
         if (hit.collider != null)
         {
@@ -31,6 +29,11 @@ public class TileData : MonoBehaviour, IPointerDownHandler, IDragHandler
                 tile.SelectTile();
             }
         }
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        WordSelectionManager.Instance.StopSelection();
     }
 
     private void SelectTile()
