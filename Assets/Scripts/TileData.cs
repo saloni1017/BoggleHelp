@@ -10,6 +10,8 @@ public class TileData : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     public string Letter;   // Letter assigned to this tile
     public int TileType;    // Tile type (not used here but can be for different types of tiles)
     public List<Image> dots; // List of dot images to indicate score
+    public GameObject Bug;
+    public GameObject Block;
 
     private void Awake()
     {

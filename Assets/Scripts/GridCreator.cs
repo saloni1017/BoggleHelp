@@ -81,6 +81,7 @@ public class GridCreator : MonoBehaviour
             }
             if (row == rows && col == cols && !IsInitialised)
             {
+                int BugCount = grid.bugCount;
                 IsInitialised = true;
                 for (int i = 0; i < row; i++)
                 {
@@ -92,6 +93,11 @@ public class GridCreator : MonoBehaviour
                         tileObj.GetComponentInChildren<TextMeshProUGUI>().text = rowCol[i,j];
                         tileObj.GetComponent<TileData>().IsSelected = false;
                         tileObj.GetComponent<TileData>().Letter = rowCol[i, j];
+                        if(BugCount > 0)
+                        {
+                            tileObj.GetComponent<TileData>().Bug.SetActive(true);
+                            BugCount--;
+                        }
                         /// assign tile type here in tile data class
                         tileObj.transform.SetParent(parent.transform);
                     }

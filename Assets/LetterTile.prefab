@@ -720,6 +720,8 @@ MonoBehaviour:
   - {fileID: 1098425389137527345}
   - {fileID: 6470689576986634842}
   - {fileID: 9162637207802812848}
+  Bug: {fileID: 0}
+  Block: {fileID: 0}
 --- !u!61 &8599162656709570243
 BoxCollider2D:
   m_ObjectHideFlags: 0
