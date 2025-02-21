@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class TileData : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
@@ -7,19 +9,20 @@ public class TileData : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     public bool IsDisabled; // Prevents selection of tiles used in valid words
     public string Letter;   // Letter assigned to this tile
     public int TileType;    // Tile type (not used here but can be for different types of tiles)
+    public List<Image> dots; // List of dot images to indicate score
 
     private void Awake()
     {
         IsSelected = false;
-        IsDisabled = false; // Initially, all tiles are selectable
+        IsDisabled = false; // Ensure tiles are selectable at start
     }
 
     // Called when the player touches a tile
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (!IsSelected && !IsDisabled) // Prevent selecting already selected or disabled tiles
+        if (!IsSelected && !IsDisabled) // Only select if tile is active
         {
-            WordSelectionManager.Instance.StartSelection(); // Start a new word selection
+            WordSelectionManager.Instance.StartSelection();
             SelectTile();
         }
     }
@@ -31,7 +34,7 @@ public class TileData : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         if (hit.collider != null)
         {
             TileData tile = hit.collider.GetComponent<TileData>();
-            if (tile != null && !tile.IsSelected && !tile.IsDisabled) // Select only if not selected or disabled
+            if (tile != null && !tile.IsSelected && !tile.IsDisabled)
             {
                 tile.SelectTile();
             }
@@ -47,9 +50,9 @@ public class TileData : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     // Mark tile as selected
     public void SelectTile()
     {
-        if (!IsSelected && !IsDisabled)
+        if (!IsSelected && !IsDisabled) // Prevents re-selection in the same swipe
         {
-            IsSelected = true; // Prevents re-selection in the same swipe
+            IsSelected = true;
             WordSelectionManager.Instance.AddTile(this);
         }
     }
@@ -63,6 +66,19 @@ public class TileData : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     // Disable tile (used for valid words so they can't be selected again)
     public void DisableTile()
     {
-        IsDisabled = true;
+        IsDisabled = true; // This prevents future selection
+        ChangeDotColor(Color.white); // Change dots to white for valid words
+    }
+
+    // Change the color of all dots
+    public void ChangeDotColor(Color newColor)
+    {
+        foreach (Image dot in dots)
+        {
+            if (dot != null)
+            {
+                dot.color = newColor;
+            }
+        }
     }
 }

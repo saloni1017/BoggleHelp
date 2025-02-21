@@ -713,8 +713,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsSelected: 0
+  IsDisabled: 0
   Letter: 
   TileType: 0
+  dots:
+  - {fileID: 1098425389137527345}
+  - {fileID: 6470689576986634842}
+  - {fileID: 9162637207802812848}
 --- !u!61 &8599162656709570243
 BoxCollider2D:
   m_ObjectHideFlags: 0

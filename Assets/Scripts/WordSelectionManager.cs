@@ -100,9 +100,13 @@ public class WordSelectionManager : MonoBehaviour
     {
         foreach (TileData tile in selectedTiles)
         {
-            tile.DisableTile(); // Prevents re-selection of these tiles
+            if (!tile.IsDisabled) // Ensure already disabled tiles are not modified
+            {
+                tile.DisableTile(); // Prevents re-selection of these tiles
+            }
         }
     }
+
 
     // Print all valid words stored so far
     private void PrintFinalWordsList()
