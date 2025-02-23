@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 7788843568469318385}
   - component: {fileID: 6470689576986634842}
   m_Layer: 5
-  m_Name: dot
+  m_Name: dot2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 7929327916895584516}
   - component: {fileID: 1098425389137527345}
   m_Layer: 5
-  m_Name: dot
+  m_Name: dot1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -312,7 +312,7 @@ GameObject:
   - component: {fileID: 4188976660620445633}
   - component: {fileID: 9162637207802812848}
   m_Layer: 5
-  m_Name: dot
+  m_Name: dot3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -661,6 +661,7 @@ GameObject:
   - component: {fileID: 7693545587948083988}
   - component: {fileID: 2532280405492085965}
   - component: {fileID: 8599162656709570243}
+  - component: {fileID: 3111424895848613276}
   m_Layer: 5
   m_Name: LetterTile
   m_TagString: Untagged
@@ -723,6 +724,7 @@ MonoBehaviour:
   Bug: {fileID: 45450720790491816}
   IsBug: 0
   Block: {fileID: 990310521115680242}
+  animator: {fileID: 3111424895848613276}
 --- !u!61 &8599162656709570243
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -768,3 +770,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 197.78094, y: 199.67908}
   m_EdgeRadius: 0
+--- !u!95 &3111424895848613276
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6849207466271886690}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e9ff4f658b319ec49ae3ead1dc9b5fb1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

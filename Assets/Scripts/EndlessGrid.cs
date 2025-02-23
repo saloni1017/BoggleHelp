@@ -1,18 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 using TMPro;
-using Unity.VisualScripting;
-using System;
+using UnityEngine;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
-public class GridCreator : MonoBehaviour
+public class EndlessGrid : MonoBehaviour
 {
-    public static GridCreator GCInstance;
+    public static EndlessGrid Instance;
 
     public TextMeshProUGUI CountText;
     public int WordToWin;
-
     [System.Serializable]
     public class GridSize
     {
@@ -42,8 +40,9 @@ public class GridCreator : MonoBehaviour
     {
         public List<GridData> data;
     }
-    private int row = 4;
-    private int col = 4;
+
+    private int row = 3;
+    private int col = 3;
     public GameObject gridPrefeb;
     private int spacing = 220;
     public GameObject parent;
@@ -54,7 +53,7 @@ public class GridCreator : MonoBehaviour
 
     void Awake()
     {
-        GCInstance = this;
+        Instance = this;
     }
 
     void Start()
@@ -94,10 +93,10 @@ public class GridCreator : MonoBehaviour
                         Vector3 position = new Vector3(j * spacing, i * spacing, 0);
 
                         var tileObj = Instantiate(gridPrefeb, position, Quaternion.identity);
-                        tileObj.GetComponentInChildren<TextMeshProUGUI>().text = rowCol[i,j];
+                        tileObj.GetComponentInChildren<TextMeshProUGUI>().text = rowCol[i, j];
                         tileObj.GetComponent<TileData>().IsSelected = false;
                         tileObj.GetComponent<TileData>().Letter = rowCol[i, j];
-                        if(BugCount > 0)
+                        if (BugCount > 0)
                         {
                             tileObj.GetComponent<TileData>().Bug.SetActive(true);
                             tileObj.GetComponent<TileData>().IsBug = true;

@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Diagnostics;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class TileData : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
@@ -14,6 +16,7 @@ public class TileData : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     public GameObject Bug;
     public bool IsBug;
     public GameObject Block;
+    public Animator animator;
 
     private void Awake()
     {
@@ -78,12 +81,27 @@ public class TileData : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     // Change the color of all dots
     public void ChangeDotColor(Color newColor)
     {
-        foreach (Image dot in dots)
+        Scene activeScene = SceneManager.GetActiveScene();
+        if(activeScene.name == "Level")
         {
-            if (dot != null)
+            foreach (Image dot in dots)
             {
-                dot.color = newColor;
+                if (dot != null)
+                {
+                    dot.color = newColor;
+                }
             }
         }
+        else
+        {
+            animator.Play("FadeOut");
+            StartCoroutine(Delay());
+            animator.Play("FadeIn");
+        }
+    }
+
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(0.2f);
     }
 }

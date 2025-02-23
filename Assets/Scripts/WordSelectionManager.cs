@@ -2,6 +2,7 @@
 using System.IO;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WordSelectionManager : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class WordSelectionManager : MonoBehaviour
     private HashSet<string> validWords = new HashSet<string>(); // Fast lookup for valid words
     private bool isSelecting = false; // Track if the player is actively swiping
 
-    private string wordListPath = @"C:\New folder\BoggleWord-main\Assets\wordlist.txt"; // Path to the word list file
+    private string wordListPath = @"C:\Sameer\BoggleHelp\Assets\wordlist.txt"; // Path to the word list file
 
     [SerializeField]
     private TextMeshProUGUI ScoreCountText;
@@ -131,7 +132,13 @@ public class WordSelectionManager : MonoBehaviour
 
         FoundCount.text = finalWordsList.Count.ToString();
         ScoreCountText.text = (letterCount * 3).ToString();
-        if (finalWordsList.Count == GridCreator.GCInstance.WordToWin)
+        Scene activeScene = SceneManager.GetActiveScene();
+        
+        if (activeScene.name == "Level" && finalWordsList.Count == GridCreator.GCInstance.WordToWin)
             GameOverScreen.SetActive(true);
+        if(activeScene.name == "Endless" && finalWordsList.Count == EndlessGrid.Instance.WordToWin)
+        {
+            GameOverScreen.SetActive(true);
+        }
     }
 }

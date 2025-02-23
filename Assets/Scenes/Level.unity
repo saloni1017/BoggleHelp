@@ -924,6 +924,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CountText: {fileID: 1927887173}
+  WordToWin: 0
   gridPrefeb: {fileID: 6849207466271886690, guid: 548031849138e4c8a8e4cfb1a98771cc, type: 3}
   parent: {fileID: 1202088239}
 --- !u!4 &1086773859
