@@ -5,7 +5,6 @@ using TMPro;
 using UnityEngine;
 using System;
 using Random = UnityEngine.Random;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class EndlessGrid : MonoBehaviour
 {
