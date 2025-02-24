@@ -43,8 +43,6 @@ public class GridCreator : MonoBehaviour
     {
         public List<GridData> data;
     }
-    private int row;
-    private int col;
     public GameObject gridPrefeb;
     private int spacing = 220;
     public GameObject parent;
@@ -64,51 +62,45 @@ public class GridCreator : MonoBehaviour
         json = File.ReadAllText(filePath);
         root = JsonUtility.FromJson<RootObject>(json);
         IsInitialised = false;
-        row = 4;
-        col = 4;
         CreateGrid();
     }
 
     void CreateGrid()
     {
-        foreach (var grid in root.data)
+        if (!IsInitialised)
         {
+            var index = Random.Range(0, 10);
+            var grid = root.data[index];
             int totalTiles = grid.gridSize.x * grid.gridSize.y;
-            int rows = grid.gridSize.y;
-            int cols = grid.gridSize.x;
-            string[,] rowCol = new string[rows, cols];
-            if (row == rows && col == cols)
+            int row = grid.gridSize.y;
+            int col = grid.gridSize.x;
+            string[,] rowCol = new string[row, col];
+            for (int i = 0; i < grid.gridData.Count; i++)
             {
-                for (int i = 0; i < grid.gridData.Count; i++)
-                {
-                    rowCol[i / col, i % col] = grid.gridData[i].letter;
-                }
+                rowCol[i / col, i % col] = grid.gridData[i].letter;
             }
-            if (row == rows && col == cols && !IsInitialised)
+            int BugCount = grid.bugCount;
+            CountText.text = grid.wordCount.ToString();
+            WordToWin = grid.wordCount;
+            IsInitialised = true;
+            for (int i = 0; i < row; i++)
             {
-                int BugCount = grid.bugCount;
-                CountText.text = grid.wordCount.ToString();
-                WordToWin = grid.wordCount;
-                IsInitialised = true;
-                for (int i = 0; i < row; i++)
+                for (int j = 0; j < col; j++)
                 {
-                    for (int j = 0; j < col; j++)
-                    {
-                        Vector3 position = new Vector3(j * spacing, i * spacing, 0);
+                    Vector3 position = new Vector3(j * spacing, i * spacing, 0);
 
-                        var tileObj = Instantiate(gridPrefeb, position, Quaternion.identity);
-                        tileObj.GetComponentInChildren<TextMeshProUGUI>().text = rowCol[i,j];
-                        tileObj.GetComponent<TileData>().IsSelected = false;
-                        tileObj.GetComponent<TileData>().Letter = rowCol[i, j];
-                        if(BugCount > 0)
-                        {
-                            tileObj.GetComponent<TileData>().Bug.SetActive(true);
-                            tileObj.GetComponent<TileData>().IsBug = true;
-                            BugCount--;
-                        }
-                        /// assign tile type here in tile data class
-                        tileObj.transform.SetParent(parent.transform);
+                    var tileObj = Instantiate(gridPrefeb, position, Quaternion.identity);
+                    tileObj.GetComponentInChildren<TextMeshProUGUI>().text = rowCol[i, j];
+                    tileObj.GetComponent<TileData>().IsSelected = false;
+                    tileObj.GetComponent<TileData>().Letter = rowCol[i, j];
+                    if (BugCount > 0)
+                    {
+                        tileObj.GetComponent<TileData>().Bug.SetActive(true);
+                        tileObj.GetComponent<TileData>().IsBug = true;
+                        BugCount--;
                     }
+                    /// assign tile type here in tile data class
+                    tileObj.transform.SetParent(parent.transform);
                 }
             }
         }
