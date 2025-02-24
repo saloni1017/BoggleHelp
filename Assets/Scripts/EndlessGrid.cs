@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
+using System;
+using Random = UnityEngine.Random;
 
 public class EndlessGrid : MonoBehaviour
 {
     public static EndlessGrid Instance;
 
-    public TextMeshProUGUI CountText;
-    public int WordToWin;
+    //public TextMeshProUGUI CountText;
+    //public int WordToWin;
     [System.Serializable]
     public class GridSize
     {
@@ -41,8 +42,8 @@ public class EndlessGrid : MonoBehaviour
         public List<GridData> data;
     }
 
-    private int row = 3;
-    private int col = 3;
+    private int row=3;
+    private int col=3;
     public GameObject gridPrefeb;
     private int spacing = 220;
     public GameObject parent;
@@ -62,6 +63,8 @@ public class EndlessGrid : MonoBehaviour
         json = File.ReadAllText(filePath);
         root = JsonUtility.FromJson<RootObject>(json);
         IsInitialised = false;
+        //row = Random.Range(3, 7);
+        //col = Random.Range(3, 8);
         CreateGrid();
     }
 
@@ -83,8 +86,8 @@ public class EndlessGrid : MonoBehaviour
             if (row == rows && col == cols && !IsInitialised)
             {
                 int BugCount = grid.bugCount;
-                CountText.text = grid.wordCount.ToString();
-                WordToWin = grid.wordCount;
+                //CountText.text = grid.wordCount.ToString();
+                //WordToWin = grid.wordCount;
                 IsInitialised = true;
                 for (int i = 0; i < row; i++)
                 {

@@ -5,6 +5,7 @@ using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
 using System;
+using Random = UnityEngine.Random;
 
 public class GridCreator : MonoBehaviour
 {
@@ -42,8 +43,8 @@ public class GridCreator : MonoBehaviour
     {
         public List<GridData> data;
     }
-    private int row = 4;
-    private int col = 4;
+    private int row;
+    private int col;
     public GameObject gridPrefeb;
     private int spacing = 220;
     public GameObject parent;
@@ -63,6 +64,8 @@ public class GridCreator : MonoBehaviour
         json = File.ReadAllText(filePath);
         root = JsonUtility.FromJson<RootObject>(json);
         IsInitialised = false;
+        row = 4;
+        col = 4;
         CreateGrid();
     }
 

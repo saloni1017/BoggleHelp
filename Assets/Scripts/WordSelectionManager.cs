@@ -136,9 +136,6 @@ public class WordSelectionManager : MonoBehaviour
         
         if (activeScene.name == "Level" && finalWordsList.Count == GridCreator.GCInstance.WordToWin)
             GameOverScreen.SetActive(true);
-        if(activeScene.name == "Endless" && finalWordsList.Count == EndlessGrid.Instance.WordToWin)
-        {
-            GameOverScreen.SetActive(true);
-        }
+        
     }
 }

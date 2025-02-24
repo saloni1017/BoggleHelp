@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using System.Diagnostics;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using TMPro;
 
 public class TileData : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
@@ -94,14 +95,22 @@ public class TileData : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         }
         else
         {
+            animator.GetComponent<Animator>().enabled = true;
             animator.Play("FadeOut");
             StartCoroutine(Delay());
             animator.Play("FadeIn");
         }
     }
-
+    string[] str = { "A", "B", "C", "D" , "E" ,"F" ,"G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+    
     IEnumerator Delay()
     {
+        IsBug = false;
+        IsSelected = false;
+        IsDisabled = false;
+        int textindex = Random.Range(0, str.Length);
+        Letter = str[textindex];
+        gameObject.GetComponentInChildren<TextMeshProUGUI>().text = str[textindex];
         yield return new WaitForSeconds(0.2f);
     }
 }
