@@ -14,7 +14,7 @@ public class WordSelectionManager : MonoBehaviour
     private HashSet<string> validWords = new HashSet<string>(); // Fast lookup for valid words
     private bool isSelecting = false; // Track if the player is actively swiping
 
-    private string wordListPath = @"C:\Sameer\BoggleHelp\Assets\wordlist.txt"; // Path to the word list file
+    private string wordListPath; // Path to the word list file
 
     [SerializeField]
     private TextMeshProUGUI ScoreCountText;
@@ -26,16 +26,21 @@ public class WordSelectionManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        LoadValidWords(); // Load valid words at the start
         GameOverScreen.SetActive(false);
     }
 
+    private void Start()
+    {
+        LoadValidWords();
+        //wordListPath = Resources.Load<TextAsset>("wordlist").text;
+    }
     // Load words from wordlist.txt into a HashSet for quick validation
     private void LoadValidWords()
     {
-        if (File.Exists(wordListPath))
+        TextAsset wordListFile = Resources.Load<TextAsset>("wordlist");
+        if (wordListFile != null)
         {
-            string[] words = File.ReadAllLines(wordListPath);
+            string[] words = wordListFile.text.Split(new[] { '\n', '\r' }, System.StringSplitOptions.RemoveEmptyEntries);
             foreach (string word in words)
             {
                 validWords.Add(word.Trim().ToUpper()); // Convert to uppercase for case-insensitive matching
@@ -44,7 +49,7 @@ public class WordSelectionManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"Word list file not found: {wordListPath}");
+            Debug.LogError("Word list file not found in Resources!");
         }
     }
 

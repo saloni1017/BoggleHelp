@@ -57,9 +57,8 @@ public class EndlessGrid : MonoBehaviour
 
     void Start()
     {
-        string filePath = "C:\\Sameer\\BoggleHelp\\Assets\\LevelData.json";
-        json = File.ReadAllText(filePath);
-        root = JsonUtility.FromJson<RootObject>(json);
+        string json = Resources.Load<TextAsset>("LevelData").text;
+        root = JsonUtility.FromJson<RootObject>(json); 
         IsInitialised = false;
         CreateGrid();
     }

@@ -58,9 +58,18 @@ public class GridCreator : MonoBehaviour
 
     void Start()
     {
-        string filePath = "C:\\Sameer\\BoggleHelp\\Assets\\LevelData.json";
-        json = File.ReadAllText(filePath);
-        root = JsonUtility.FromJson<RootObject>(json);
+        TextAsset levelDataFile = Resources.Load<TextAsset>("LevelData"); // Load the file
+        if (levelDataFile != null)
+        {
+            string json = levelDataFile.text; // Get the JSON content
+            root = JsonUtility.FromJson<RootObject>(json); // Deserialize JSON
+            Debug.Log("Level data loaded successfully!");
+        }
+        else
+        {
+            Debug.LogError("LevelData.json not found in Resources!");
+        }
+
         IsInitialised = false;
         CreateGrid();
     }
