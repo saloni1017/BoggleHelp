@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using System;
 using Random = UnityEngine.Random;
+using UnityEngine.UI;
 
 public class GridCreator : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class GridCreator : MonoBehaviour
 
     public TextMeshProUGUI CountText;
     public int WordToWin;
+    public GridLayoutGroup colSize;
+    public GridLayoutGroup rowSize;
 
     [System.Serializable]
     public class GridSize
@@ -83,6 +86,8 @@ public class GridCreator : MonoBehaviour
             int totalTiles = grid.gridSize.x * grid.gridSize.y;
             int row = grid.gridSize.y;
             int col = grid.gridSize.x;
+            colSize.constraintCount = col;
+            rowSize.constraintCount = row;
             string[,] rowCol = new string[row, col];
             for (int i = 0; i < grid.gridData.Count; i++)
             {
